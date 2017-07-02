@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Keycode Helper</title>
+
+    <style>
+        html,
+        body {
+            min-height: 100%;
+            height: 100%;
+        }
+        
+        body {
+            margin: 0;
+            background: #333;
+            color: white;
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 20px;
+        }
+        
+        .wrap {
+            display: flex;
+            min-height: 100%;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .key-display {
+            font-size: 3em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrap">
+        <h1 class="key-display">Press a key to get its keycode!</h1>
+    </div>
+
+    <script>
+        const element = document.querySelector('.key-display')
+
+        function setKey(element, keyCode) {
+            element.innerHTML = keyCode
+        }
+
+        document.addEventListener('keydown', event => setKey(element, event.keyCode))
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "keycodes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "surge ./ keycodes.aquibm.com"
+  },
+  "keywords": [],
+  "author": "Aquib Master <aquibmaster@gmail.com>",
+  "license": "MIT"
+}
