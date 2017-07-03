@@ -29,6 +29,10 @@
         }
         
         .key-display {
+            font-size: 6em;
+        }
+        
+        .key-display--help-text {
             font-size: 3em;
         }
     </style>
@@ -37,7 +41,7 @@
 <body>
 
     <div class="wrap">
-        <h1 class="key-display">Press a key to get its keycode!</h1>
+        <h1 class="key-display key-display--help-text">Press a key to get its keycode!</h1>
     </div>
 
     <script>
@@ -46,6 +50,7 @@
 
             function setKey(element, keyCode) {
                 element.innerHTML = keyCode
+                element.classList.remove('key-display--help-text')
             }
 
             document.addEventListener('keydown', event => setKey(element, event.keyCode))
