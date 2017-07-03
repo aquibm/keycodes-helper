@@ -41,13 +41,15 @@
     </div>
 
     <script>
-        const element = document.querySelector('.key-display')
+        (function () {
+            const element = document.querySelector('.key-display')
 
-        function setKey(element, keyCode) {
-            element.innerHTML = keyCode
-        }
+            function setKey(element, keyCode) {
+                element.innerHTML = keyCode
+            }
 
-        document.addEventListener('keydown', event => setKey(element, event.keyCode))
+            document.addEventListener('keydown', event => setKey(element, event.keyCode))
+        })()
     </script>
 
 </body>
