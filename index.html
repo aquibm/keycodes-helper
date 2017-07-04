@@ -65,6 +65,10 @@
 
             function setKey(keyCode, keyName) {
                 keyCodeElement.innerHTML = keyCode
+
+                if (keyName === ' ')
+                    keyName = 'Space'
+
                 keyNameElement.innerHTML = keyName
 
                 keyCodeElement.classList.remove('key-display--help-text')
