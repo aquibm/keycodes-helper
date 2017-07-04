@@ -64,19 +64,33 @@
             const keyCodeElement = document.querySelector('.key-display')
             const keyNameElement = document.querySelector('.key-name')
 
-            function setKey(keyCode, keyName) {
-                keyCodeElement.innerHTML = keyCode
+            function setKey(key) {
+                const {
+                    code,
+                    name
+                } = key
 
-                if (keyName === ' ')
-                    keyName = 'Space'
-
-                keyNameElement.innerHTML = keyName
+                keyCodeElement.innerHTML = code
+                keyNameElement.innerHTML = name
 
                 keyCodeElement.classList.remove('key-display--help-text')
                 keyNameElement.classList.remove('key-name--hidden')
             }
 
-            document.addEventListener('keydown', event => setKey(event.keyCode, event.key))
+            function fixKeyName(name) {
+                return name === ' ' ?
+                    'Space' :
+                    name
+            }
+
+            document.addEventListener('keydown', event => {
+                const key = {
+                    code: event.keyCode,
+                    name: fixKeyName(event.key)
+                }
+
+                setKey(key)
+            })
         })()
     </script>
 
