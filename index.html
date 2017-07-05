@@ -24,20 +24,27 @@
             display: flex;
             flex-direction: column;
             min-height: 100%;
-            justify-content: center;
-            align-items: center;
+            justify-content: space-between;
             text-align: center;
         }
         
-        .key-display {
+        .key {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+        }
+        
+        .key__code {
             font-size: 6em;
         }
         
-        .key-display--help-text {
+        .key__help-text {
             font-size: 3em;
         }
         
-        .key-name {
+        .key__name {
             color: #333;
             background: white;
             padding: 20px;
@@ -46,51 +53,122 @@
             border-top: 2px solid #ccc;
         }
         
-        .key-name--hidden {
-            display: none;
+        .history {
+            flex-basis: 20%;
+            overflow-x: auto;
         }
+        
+        .history__list {
+            margin: 0;
+            padding: 10px;
+            list-style: none;
+            white-space: nowrap;
+            text-align: left;
+        }
+        
+        .history__entry {
+            display: inline-block;
+            margin-right: 20px;
+            padding: 10px;
+            border: 1px solid #eee;
+            min-width: 90px;
+            text-align: center;
+        }
+        
+        .history__entry:last-child {
+            margin-right: 0;
+        }
+        
+        .history__key-code {}
+        
+        .history__key-name {}
     </style>
 </head>
 
 <body>
 
-    <div class="wrap">
-        <h1 class="key-display key-display--help-text">Press a key to get its keycode!</h1>
-        <h3 class="key-name key-name--hidden">e</h3>
+    <div id="root" class="wrap">
+        <div class="key">
+            <h1 class="key__help-text">Press a key to get its keycode!</h1>
+        </div>
     </div>
 
     <script>
         (function () {
-            const keyCodeElement = document.querySelector('.key-display')
-            const keyNameElement = document.querySelector('.key-name')
+            const App = function () {
+                this.root = document.getElementById('root')
+                this.history = []
 
-            function setKey(key) {
-                const {
-                    code,
-                    name
-                } = key
-
-                keyCodeElement.innerHTML = code
-                keyNameElement.innerHTML = name
-
-                keyCodeElement.classList.remove('key-display--help-text')
-                keyNameElement.classList.remove('key-name--hidden')
-            }
-
-            function fixKeyName(name) {
-                return name === ' ' ?
-                    'Space' :
-                    name
-            }
-
-            document.addEventListener('keydown', event => {
-                const key = {
-                    code: event.keyCode,
-                    name: fixKeyName(event.key)
+                this.init = function () {
+                    document.addEventListener('keydown', this.handleKeydown.bind(this))
                 }
 
-                setKey(key)
-            })
+                this.render = function () {
+                    const firstKey = this.history[0]
+
+                    if (!firstKey)
+                        return
+
+                    this.root.innerHTML =
+                        `
+                            <div class="key">
+                                <h1 class="key__code">${firstKey.code}</h1>
+                                <h3 class="key__name">${firstKey.name}</h3>
+                            </div>
+
+                            <div class="history">
+                                <ul class="history__list">
+                                    ${this._buildHistory().join('')}
+                                </ul>
+                            </div>
+                        `
+                }
+
+                this.addToHistory = function (key) {
+                    const index = this.history.findIndex(k => k.code === key.code)
+
+                    if (index === -1) {
+                        this.history = [key, ...this.history]
+                        return
+                    }
+
+                    this.history = [
+                        key,
+                        ...this.history.slice(0, index),
+                        ...this.history.slice(index + 1, this.history.length)
+                    ]
+                }
+
+                this.handleKeydown = function (evt) {
+                    const key = {
+                        code: evt.keyCode,
+                        name: this._fixKeyName(evt.key)
+                    }
+
+                    this.addToHistory(key)
+                    this.render()
+                }
+
+                this._buildHistory = function () {
+                    return this.history.map(entry =>
+                        `
+                            <li class="history__entry">
+                                <p class="history__key-code">${entry.code}</p>
+                                <p class="history__key-name">${entry.name}</p>
+                            </li>
+                        `
+                    )
+                }
+
+                this._fixKeyName = function (name) {
+                    return name === ' ' ?
+                        'Space' :
+                        name
+                }
+            }
+
+            const app = new App()
+            app.init()
         })()
     </script>
 
