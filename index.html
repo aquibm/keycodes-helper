@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Keycode Helper</title>
 
+    <!-- Critical Path -->
     <style>
         html,
         body {
@@ -36,47 +37,8 @@
             flex-grow: 1;
         }
         
-        .key__code {
-            font-size: 6em;
-        }
-        
         .key__help-text {
             font-size: 3em;
-        }
-        
-        .key__name {
-            color: #333;
-            background: white;
-            padding: 20px;
-            min-width: 50px;
-            border-radius: 4px;
-            border-top: 2px solid #ccc;
-        }
-        
-        .history {
-            flex-basis: 20%;
-            overflow-x: auto;
-        }
-        
-        .history__list {
-            margin: 0;
-            padding: 10px;
-            list-style: none;
-            white-space: nowrap;
-            text-align: left;
-        }
-        
-        .history__entry {
-            display: inline-block;
-            margin-right: 20px;
-            padding: 10px;
-            border: 1px solid #eee;
-            min-width: 90px;
-            text-align: center;
-        }
-        
-        .history__entry:last-child {
-            margin-right: 0;
         }
     </style>
 </head>
@@ -88,6 +50,8 @@
             <h1 class="key__help-text">Press a key to get its keycode!</h1>
         </div>
     </div>
+
+    <link rel="stylesheet" href="style.css">
 
     <script>
         (function () {
