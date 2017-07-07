@@ -78,10 +78,6 @@
         .history__entry:last-child {
             margin-right: 0;
         }
-        
-        .history__key-code {}
-        
-        .history__key-name {}
     </style>
 </head>
 
@@ -153,8 +149,8 @@
                     return this.history.map(entry =>
                         `
                             <li class="history__entry">
-                                <p class="history__key-code">${entry.code}</p>
-                                <p class="history__key-name">${entry.name}</p>
+                                <p>${entry.code}</p>
+                                <p>${entry.name}</p>
                             </li>
                         `
                     )
