@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rimraf dist/",
     "build": "npm run clean && webpack",
-    "watch": "webpack-dev-server",
+    "watch": "npm run clean && webpack-dev-server",
     "deploy": "npm run build && surge dist/ keycodes.aquibm.com"
   },
   "keywords": [],

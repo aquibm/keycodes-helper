@@ -1,5 +1,5 @@
-import * as History from './history'
-
+import App from './app'
 import '../css/style.css'
 
-console.log('All setup')
+const root = document.getElementById('root')
+new App(root)
