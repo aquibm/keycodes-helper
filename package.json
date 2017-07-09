@@ -4,9 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "deploy": "surge ./ keycodes.aquibm.com"
+    "clean": "rimraf dist/",
+    "build": "npm run clean && webpack",
+    "watch": "webpack-dev-server",
+    "deploy": "npm run build && surge dist/ keycodes.aquibm.com"
   },
   "keywords": [],
   "author": "Aquib Master <aquibmaster@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-preset-env": "^1.6.0",
+    "css-loader": "^0.28.4",
+    "html-webpack-plugin": "^2.29.0",
+    "rimraf": "^2.6.1",
+    "style-loader": "^0.18.2",
+    "webpack": "^3.1.0",
+    "webpack-dev-server": "^2.5.1"
+  }
 }
