@@ -1,12 +1,18 @@
 import HistoryStore from './historyStore'
 
 class App {
-    constructor(mount) {
+    constructor(mount, db) {
         if (!mount) throw Error('Must specify an element to mount the app')
+        if (!db) throw Error('Must specify a database')
 
         this.mount = mount
         this.handleKeydown = this.handleKeydown.bind(this)
-        this.historyStore = new HistoryStore()
+        this.historyStore = new HistoryStore(db)
+
+        this.historyStore.hydrate().then(() => {
+            const history = this.historyStore.get()
+            if (history && history.length > 0) this.render()
+        })
 
         window.addEventListener('keydown', this.handleKeydown)
     }

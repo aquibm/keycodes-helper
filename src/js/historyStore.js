@@ -1,6 +1,7 @@
 class HistoryStore {
-    constructor() {
+    constructor(db) {
         this.history = []
+        this.db = db
     }
 
     addItem(item) {
@@ -8,14 +9,15 @@ class HistoryStore {
 
         if (index < 0) {
             this.history = [item, ...this.history]
-            return
+        } else {
+            this.history = [
+                item,
+                ...this.history.slice(0, index),
+                ...this.history.slice(index + 1, this.history.length)
+            ]
         }
 
-        this.history = [
-            item,
-            ...this.history.slice(0, index),
-            ...this.history.slice(index + 1, this.history.length)
-        ]
+        this.db.set('history', this.history)
     }
 
     first() {
@@ -24,6 +26,13 @@ class HistoryStore {
 
     get() {
         return this.history
+    }
+
+    hydrate() {
+        return this.db
+            .get('history')
+            .then(history => history && (this.history = history))
+            .catch(() => console.info('Could not hydrate history'))
     }
 }
 
