@@ -1,5 +1,8 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+
+const env = process.env.NODE_ENV || 'dev'
 
 module.exports = {
     entry: './src/js',
@@ -14,13 +17,19 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'Keycode Helper',
             template: './src/index.ejs'
-        })
+        }),
+        new ExtractTextPlugin('style.css')
     ],
     module: {
         loaders: [
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                use: env === 'prod'
+                    ? ExtractTextPlugin.extract({
+                          fallback: 'style-loader',
+                          use: 'css-loader'
+                      })
+                    : ['style-loader', 'css-loader']
             },
             {
                 test: /\.js$/,
