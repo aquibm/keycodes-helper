@@ -20,7 +20,7 @@ class App {
     handleKeydown(event) {
         const key = {
             code: event.keyCode,
-            name: event.key
+            name: this.resolveKeyName(event)
         }
 
         this.historyStore.addItem(key)
@@ -38,6 +38,11 @@ class App {
         )
 
         return elements.join('')
+    }
+
+    resolveKeyName(event) {
+        const { key, code } = event
+        return key.trim() || code
     }
 
     render() {
